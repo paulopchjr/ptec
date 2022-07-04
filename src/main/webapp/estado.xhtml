@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+	<title>Estado</title>
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml"></ui:include>
+
+	<h:form id="frmEstado">
+		<b:column col-xs="12" col-sm="6" col-md="8" col-lg="12"
+			style="background-color:#fafafa;">
+			<b:container layout="fluid">
+				<b:panel title="Cadastro de Pessoas" look="primary">
+
+					<h:messages
+						infoStyle="color:#fafafa; background:#006400; padding-left:1cm" />
+
+
+					<b:panel>
+						<b:panelGrid columns="1">
+							<b:column span="2">
+								<h:outputLabel value="ID:" />
+								<b:inputText value="#{estadoBean.estado.id}" readonly="true" />
+							</b:column>
+						</b:panelGrid>
+
+						<b:panelGrid columns="1">
+							<b:column span="6">
+								<h:outputLabel value="Nome:" />
+								<b:inputText value="#{estadoBean.estado.nome}" />
+							</b:column>
+						</b:panelGrid>
+					</b:panel>
+
+					<h:panelGroup>
+						<h:commandButton value="Novo" id="botoNovo"
+							action="#{estadoBean.novo}"
+							image="/resources/img/novo-usuario.png" immediate="true"
+							title="Novo" style="margin-left:1cm;">
+							<f:ajax execute="botaoNovo" render="@form"></f:ajax>
+						</h:commandButton>
+
+						<h:commandButton value="Salvar" action="#{estadoBean.saveEstado}"
+							image="/resources/img/salve-.png" title="Salvar"
+							style="margin-left:1cm;" />
+
+						<h:commandButton value="Excluir"
+							action="#{estadoBean.deleteEstado}"
+							image="/resources/img/delete (2).png" title="Excluir"
+							style="margin-left:1cm;" />
+					</h:panelGroup>
+				</b:panel>
+			</b:container>
+		</b:column>
+	</h:form>
+
+	<h:form>
+		<b:column col-xs="12" col-sm="6" col-md="8" col-lg="12"
+			style="background-color:#fafafa;">
+			<b:container layout="fluid">
+				<b:panel look="primary" style="padding:5px">
+					<b:row>
+						<b:label value="Lista de Estados" severity="primary"
+							large-screen="full-width" style="font-size:15px;" />
+					</b:row>
+					<b:row>
+						<b:dataTable id="tblCidades" value="#{estadoBean.listaEstados}"
+							var="es" border="3" cellpadding="6">
+
+							<h:column>
+								<f:facet name="header">ID</f:facet>
+								<h:outputText value="#{es.id}"></h:outputText>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Nome</f:facet>
+								<h:outputText value="#{es.nome}"></h:outputText>
+							</h:column>
+
+						</b:dataTable>
+					</b:row>
+				</b:panel>
+			</b:container>
+		</b:column>
+	</h:form>
+
+</h:body>
+</html>

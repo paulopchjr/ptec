@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Cadastro de Perfil</title>
+
+
+
+
+</h:head>
+<h:body style="background-color:#F5F5F5;">
+
+	<ui:include src="/menu.xhtml"></ui:include>
+	<h:form id="formPefil">
+		<b:column col-xs="12" col-sm="6" col-md="8" col-lg="12"
+			style="background-color:#F5F5F5;">
+			<b:container layout="fluid">
+				<b:panel title="Cadastro de Perfils" look="primary">
+					<h:messages
+						infoStyle="color:#fafafa; background:#006400; padding-left:1cm" />
+
+					<b:panel>
+						<b:panelGrid columns="1">
+							<b:column span="2">
+								<h:outputLabel value="ID:" />
+								<b:inputText value="#{perfilBean.perfil.id}" readonly="true" />
+							</b:column>
+						</b:panelGrid>
+
+						<b:column col-xs="6" col-md="4">
+							<h:outputLabel value="Nome:" />
+							<b:inputText value="#{perfilBean.perfil.tipoPerfil}" />
+						</b:column>
+
+						<b:column>
+							<h:outputLabel value="Ativo" />
+							<h:selectBooleanCheckbox value="#{perfilBean.perfil.ativo}"></h:selectBooleanCheckbox>
+
+						</b:column>
+					</b:panel>
+
+					<h:panelGroup>
+						<h:commandButton value="Novo" id="botoNovo"
+							action="#{perfilBean.novo}"
+							image="/resources/img/novo-usuario.png" immediate="true"
+							title="Novo" style="margin-left:1cm;">
+							<f:ajax execute="botaoNovo" render="@form"></f:ajax>
+						</h:commandButton>
+						<h:commandButton value="Salvar" action="#{perfilBean.save}"
+							style="margin-left:1cm;" image="/resources/img/salve-.png"
+							title="Salvar" />
+
+						<h:commandButton value="Excluir"
+							action="#{perfilBean.excluirPerfil}"
+							image="/resources/img/delete (2).png" title="Excluir" />
+
+					</h:panelGroup>
+				</b:panel>
+			</b:container>
+		</b:column>
+	</h:form>
+
+	<h:form id="tabelaPerfils">
+			<b:column col-xs="12" col-sm="6" col-md="8" col-lg="12">
+			<b:container layout="fluid">
+				<b:panel>
+					<b:row>
+						<b:label value="Lista de Perfils" severity="primary"
+							large-screen="full-width" style="font-size:15px;" />
+					</b:row>
+					<b:row>
+						<b:dataTable id="datatableperfils" value="#{perfilBean.perfils}"
+							var="pfl" border="3" cellpadding="6">
+							<b:dataTableColumn value="#{pfl.id}" label="ID" />
+							<b:dataTableColumn value="#{pfl.tipoPerfil}" label="Perfil" />
+							<h:column>
+								<f:facet name="header">Editar</f:facet>
+								<h:commandLink value="editar">
+									<f:setPropertyActionListener value="#{pfl}"
+										target="#{perfilBean.perfil}" />
+								</h:commandLink>
+							</h:column>
+							<h:column>
+								<f:facet name="header">Excluir</f:facet>
+								<h:commandLink value="excluir"
+									action="#{perfilBean.excluirPerfil}">
+									<f:setPropertyActionListener value="#{pfl}"
+										target="#{perfilBean.perfil}" />
+								</h:commandLink>
+							</h:column>
+						</b:dataTable>
+					</b:row>
+				</b:panel>
+			</b:container>
+		</b:column>
+	</h:form>
+
+</h:body>
+</html>

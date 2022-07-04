@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+	<title>Relátorios de Ordem de Serviço</title>
+</h:head>
+<h:body  style="background-color:#F5F5F5;">
+	<ui:include src="/menu.xhtml"></ui:include>
+	<b:form id="frmRelatorioOrdemServico">
+
+		<b:column col-xs="12" col-sm="6" col-md="8" col-lg="12"
+			style="background-color:#F5F5F5;">
+
+			<b:container layout="fluid">
+				<b:panel title="Relatórios de Ordem de Serviços" look="primary">
+
+					<b:row styleClass="show-grid">
+						<b:column col-xs="6" col-sm="6" col-md="4">
+							<h:outputLabel value="Data Inicial" />
+							<b:datepicker locale="en" requiredMessage="Data Inválida"
+								value="#{relatorioOsBean.dataInicial}" />
+						</b:column>
+
+						<b:column col-xs="6" col-sm="6" col-md="4">
+							<h:outputLabel value="Data Final" />
+							<b:datepicker locale="en" requiredMessage="Data Inválida"
+								value="#{relatorioOsBean.dataFinal}" />
+						</b:column>
+
+						<b:column col-xs="6" col-sm="6" col-md="4">
+							<h:outputLabel value="Serviço:" />
+							<b:selectOneMenu value="#{relatorioOsBean.ordemServico.servicos}"
+								id="relComboServicos" converter="servicosConverter"
+								immediate="true">
+								<f:selectItem itemLabel="---[SELECIONE]---"
+									noSelectionOption="true" itemDisabled="true" />
+								<f:selectItems value="#{ordemservicoBean.itemServicos}" />
+							</b:selectOneMenu>
+						</b:column>
+					</b:row>
+				</b:panel>
+				<b:panel>
+					<b:commandButton value="Buscar" look="primary"
+						action="#{relatorioOsBean.buscar}" />
+					<b:commandButton value="Limpar" style="margin-left:1cm;"
+						look="success" action="#{relatorioOsBean.limpar}" />
+				</b:panel>
+			</b:container>
+		</b:column>
+	</b:form>
+
+	<b:form id="frmtblOS">
+		<b:column col-xs="12" col-sm="6" col-md="8" col-lg="12"
+			style="background-color:#fafafa;">
+			<b:container layout="fluid">
+				<b:row>
+					<b:label value="Lista de Pessoas" severity="primary"
+						large-screen="full-width" style="font-size:15px;" />
+				</b:row>
+
+				<b:row>
+					<b:dataTable id="tblRelOrdemServicos"
+						value="#{relatorioOsBean.listaOs}" var="relOs" pdf="true"
+						excel="true">
+						<b:dataTableColumn value="#{relOs.id}" />
+						<b:dataTableColumn value="#{relOs.pessoa.nome}" />
+						<b:dataTableColumn value="#{relOs.servicos.descricao}" />
+						<b:dataTableColumn value="#{relOs.dataInicial}" />
+						<b:dataTableColumn value="#{relOs.dataFinal}" />
+					</b:dataTable>
+				</b:row>
+			</b:container>
+
+
+		</b:column>
+	</b:form>
+
+</h:body>
+</html>

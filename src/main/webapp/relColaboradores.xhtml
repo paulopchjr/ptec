@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+	<title>Relátorios de Colaboradores</title>
+</h:head>
+<h:body style="background-color:#F5F5F5;">
+	<ui:include src="/menu.xhtml"></ui:include>
+	<b:form id="formColabadoradores">
+
+		<b:column col-xs="12" col-sm="6" col-md="8" col-lg="12"
+			style="background-color:#F5F5F5;">
+
+			<b:container layout="fluid">
+				<b:panel title="Relatórios de Ordem de Serviços" look="primary">
+
+					<b:row styleClass="show-grid">
+
+						<b:column>
+							<h:outputLabel value="Nome do Colaborador" />
+							<b:inputText value="#{relColaboradoresBean.nome}" />
+						</b:column>
+
+						<b:column col-xs="6" col-sm="6" col-md="4">
+							<h:outputLabel value="Data Inicial" />
+							<b:datepicker  locale="pt_BR"  requiredMessage="Data Inválida"
+								value="#{relColaboradoresBean.dataInicial}" />
+						</b:column>
+
+						<b:column col-xs="6" col-sm="6" col-md="4">
+							<h:outputLabel value="Data Final" />
+							<b:datepicker  locale="pt_BR"  requiredMessage="Data Inválida"
+								value="#{relColaboradoresBean.dataFinal}" />
+						</b:column>
+
+
+						<b:column col-xs="6" col-sm="6" col-md="4">
+							<h:outputLabel value="Pefil:" />
+							<b:selectOneMenu value="#{relColaboradoresBean.pessoa.perfil}"
+								id="relComboServicos" converter="perfilConverter"
+								immediate="true">
+								<f:selectItem itemLabel="---[SELECIONE]---"
+									noSelectionOption="true" itemDisabled="true" />
+								<f:selectItems value="#{relColaboradoresBean.itemsPerfils}" />
+							</b:selectOneMenu>
+						</b:column>
+					</b:row>
+					<b:panel>
+						<b:commandButton value="Buscar" look="primary"
+							action="#{relColaboradoresBean.filtro}" />
+						<b:commandButton value="Limpar Dados" look="success" action="#{relColaboradoresBean.limpar}"/>	
+
+					</b:panel>
+				</b:panel>
+			</b:container>
+		</b:column>
+	</b:form>
+
+	<b:form id="frmtblOS">
+		<b:column col-xs="12" col-sm="6" col-md="8" col-lg="12"
+			style="background-color:#fafafa;">
+			<b:container layout="fluid">
+				<b:row>
+					<b:label value="Lista de Pessoas" severity="primary"
+						large-screen="full-width" style="font-size:15px;" />
+				</b:row>
+
+				<b:row>
+					<b:dataTable id="tblRelOrdemServicos"
+						value="#{relColaboradoresBean.colaboradores}" var="c" pdf="true"
+						excel="true">
+						<b:dataTableColumn value="#{c.id}" label="ID:" />
+						<b:dataTableColumn value="#{c.nome}" label="Nome:" />
+						<b:dataTableColumn value="#{c.perfil.tipoPerfil}" label="Perfil"/>
+					
+					</b:dataTable>
+				</b:row>
+			</b:container>
+
+
+		</b:column>
+	</b:form>
+
+</h:body>
+</html>
